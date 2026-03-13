@@ -417,16 +417,19 @@ export default function EC2Control() {
                 cursor: loading || actionLoading ? "not-allowed" : "pointer",
                 border: "1px solid #d1d5db",
                 letterSpacing: "0.05em",
-                background: "#ffffff",
-                color: loading ? "#9ca3af" : "#111827",
+                background: loading || actionLoading ? "#f3f4f6" : "#ffffff",
+                color: loading || actionLoading ? "#9ca3af" : "#111827",
                 transition: "background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease",
                 fontFamily: "'Space Grotesk', sans-serif",
                 boxShadow: "0 3px 10px rgba(15,23,42,0.08)",
-                opacity: loading || actionLoading ? 0.7 : 1
+                opacity: loading || actionLoading ? 0.8 : 1
               }}
             >
-              {loading ? (
-                <span style={{ display: "inline-block", animation: "spin 1s linear infinite" }}>↻ Checking...</span>
+              {loading || actionLoading ? (
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ display: "inline-block", animation: "spin 1s linear infinite" }}>↻</span>
+                  <span>{loading ? "Checking..." : "Processing..."}</span>
+                </span>
               ) : "↻ Status"}
             </button>
           </div>
