@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 
 // ─── CONFIG: Set your values here ───────────────────────────────────────────
-const DEFAULT_INSTANCE_ID = "i-xxxxxxxxxxxxxxxxx";
-const DEFAULT_API_ENDPOINT = "https://YOUR_LAMBDA_FUNCTION_URL";
-const APP_PASSWORD = "your-secret-password"; // ← change this
+const DEFAULT_INSTANCE_ID = "i-02413380b122ed0a7";
+const DEFAULT_API_ENDPOINT = "https://4oi4pmg6qdnpbz35cvev5xvk240vanzy.lambda-url.us-east-2.on.aws/";
+const APP_PASSWORD = "prodv2@2024"; // ← change this
 // ─────────────────────────────────────────────────────────────────────────────
 
 function PasswordGate({ onUnlock }) {
