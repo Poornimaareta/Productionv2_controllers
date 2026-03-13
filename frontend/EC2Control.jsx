@@ -23,40 +23,67 @@ function PasswordGate({ onUnlock }) {
 
   return (
     <div style={{
-      minHeight: "100vh", background: "#0a0a0f",
-      display: "flex", flexDirection: "column", alignItems: "center",
-      justifyContent: "center", padding: "24px 16px",
+      minHeight: "100vh",
+      background: "#f3f4f6",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "32px 16px",
       fontFamily: "'IBM Plex Mono', monospace",
     }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap');
         @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
         @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)} }
-        input:focus { outline: none; border-color: #6366f1 !important; }
+        input:focus { outline: none; border-color: #6366f1 !important; box-shadow: 0 0 0 1px rgba(129,140,248,0.5); }
       `}</style>
+
       <div style={{ marginBottom: 32, textAlign: "center" }}>
-        <div style={{ fontSize: 11, letterSpacing: "0.3em", color: "#4b5563",
-          textTransform: "uppercase", marginBottom: 8 }}>AWS Infrastructure</div>
-        <h1 style={{ fontSize: 28, fontWeight: 700, color: "#f9fafb", margin: 0,
-          fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+        <div style={{
+          fontSize: 11,
+          letterSpacing: "0.3em",
+          color: "#6b7280",
+          textTransform: "uppercase",
+          marginBottom: 8
+        }}>
+          AWS Infrastructure
+        </div>
+        <h1 style={{
+          fontSize: 28,
+          fontWeight: 700,
+          color: "#111827",
+          margin: 0,
+          fontFamily: "'Space Grotesk', sans-serif",
+          letterSpacing: "-0.02em"
+        }}>
           EC2 Instance Control
         </h1>
       </div>
+
       <div style={{
-        width: "100%", maxWidth: 380,
-        background: "#111116", border: "1px solid #1f2937",
-        borderRadius: 16, padding: "32px 28px",
-        boxShadow: "0 0 60px rgba(0,0,0,0.6)",
+        width: "100%",
+        maxWidth: 420,
+        background: "#ffffff",
+        border: "1px solid #e5e7eb",
+        borderRadius: 18,
+        padding: "32px 30px 26px",
+        boxShadow: "0 22px 55px rgba(15,23,42,0.20)",
         animation: "fadeIn 0.4s ease",
       }}>
-        <div style={{ textAlign: "center", marginBottom: 28 }}>
-          <div style={{ fontSize: 36, marginBottom: 12 }}>🔒</div>
-          <div style={{ color: "#9ca3af", fontSize: 14, fontFamily: "'Space Grotesk', sans-serif" }}>
+        <div style={{ textAlign: "center", marginBottom: 24 }}>
+          <div style={{ fontSize: 36, marginBottom: 10 }}>🔒</div>
+          <div style={{
+            color: "#4b5563",
+            fontSize: 14,
+            fontFamily: "'Space Grotesk', sans-serif"
+          }}>
             Enter password to continue
           </div>
         </div>
+
         <div style={{ animation: shake ? "shake 0.4s ease" : "none" }}>
-          <div style={{ position: "relative", marginBottom: 14 }}>
+          <div style={{ position: "relative", marginBottom: 16 }}>
             <input
               type={showPw ? "text" : "password"}
               value={input}
@@ -65,25 +92,58 @@ function PasswordGate({ onUnlock }) {
               placeholder="Password"
               autoFocus
               style={{
-                width: "100%", background: "#1a1a24", border: "1px solid #2d3748",
-                color: "#e5e7eb", borderRadius: 10, padding: "12px 44px 12px 16px",
-                fontSize: 14, fontFamily: "'IBM Plex Mono', monospace",
-                boxSizing: "border-box", transition: "border-color 0.2s"
+                width: "100%",
+                background: "#f9fafb",
+                border: "1px solid #d1d5db",
+                color: "#111827",
+                borderRadius: 999,
+                padding: "12px 48px 12px 16px",
+                fontSize: 14,
+                fontFamily: "'IBM Plex Mono', monospace",
+                boxSizing: "border-box",
+                transition: "border-color 0.2s, box-shadow 0.2s, background-color 0.2s"
               }}
             />
-            <button onClick={() => setShowPw(s => !s)} style={{
-              position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)",
-              background: "none", border: "none", color: "#4b5563", cursor: "pointer",
-              fontSize: 16, padding: 0, lineHeight: 1
-            }}>{showPw ? "🙈" : "👁"}</button>
+            <button
+              type="button"
+              onClick={() => setShowPw(s => !s)}
+              style={{
+                position: "absolute",
+                right: 14,
+                top: "50%",
+                transform: "translateY(-50%)",
+                background: "none",
+                border: "none",
+                color: "#6b7280",
+                cursor: "pointer",
+                fontSize: 16,
+                padding: 0,
+                lineHeight: 1
+              }}
+            >
+              {showPw ? "🙈" : "👁"}
+            </button>
           </div>
-          <button onClick={attempt} style={{
-            width: "100%", padding: "12px", borderRadius: 10, fontSize: 14, fontWeight: 600,
-            cursor: "pointer", border: "none", letterSpacing: "0.03em",
-            background: "linear-gradient(135deg, #4f46e5, #6366f1)",
-            color: "#fff", fontFamily: "'Space Grotesk', sans-serif",
-            boxShadow: "0 4px 12px rgba(99,102,241,0.3)", transition: "opacity 0.2s"
-          }}>
+
+          <button
+            onClick={attempt}
+            style={{
+              width: "100%",
+              padding: "12px",
+              borderRadius: 999,
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: "pointer",
+              border: "none",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              background: "linear-gradient(135deg, #4f46e5, #6366f1)",
+              color: "#ffffff",
+              fontFamily: "'Space Grotesk', sans-serif",
+              boxShadow: "0 6px 18px rgba(79,70,229,0.45)",
+              transition: "transform 0.08s ease, box-shadow 0.08s ease, opacity 0.15s ease"
+            }}
+          >
             Unlock
           </button>
         </div>
