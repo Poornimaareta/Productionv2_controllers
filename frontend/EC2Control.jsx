@@ -217,20 +217,36 @@ export default function EC2Control() {
 
       {/* Header */}
       <div style={{ marginBottom: 32, textAlign: "center" }}>
-        <div style={{ fontSize: 11, letterSpacing: "0.3em", color: "#9ca3af",
-          textTransform: "uppercase", marginBottom: 8 }}>AWS Infrastructure</div>
-        <h1 style={{ fontSize: 28, fontWeight: 700, color: "#111827", margin: 0,
-          fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
+        <div style={{
+          fontSize: 11,
+          letterSpacing: "0.3em",
+          color: "#6b7280",
+          textTransform: "uppercase",
+          marginBottom: 8
+        }}>
+          AWS Infrastructure
+        </div>
+        <h1 style={{
+          fontSize: 28,
+          fontWeight: 700,
+          color: "#111827",
+          margin: 0,
+          fontFamily: "'Space Grotesk', sans-serif",
+          letterSpacing: "-0.02em"
+        }}>
           EC2 Instance Control
         </h1>
       </div>
 
       {/* Main Card */}
       <div style={{
-        width: "100%", maxWidth: 480,
-        background: "#ffffff", border: "1px solid #e5e7eb",
-        borderRadius: 16, overflow: "hidden",
-        boxShadow: "0 18px 45px rgba(15,23,42,0.10)",
+        width: "100%",
+        maxWidth: 520,
+        background: "#ffffff",
+        border: "1px solid #d1d5db",
+        borderRadius: 18,
+        overflow: "hidden",
+        boxShadow: "0 24px 60px rgba(15,23,42,0.18)",
         animation: "fadeIn 0.4s ease"
       }}>
         {/* Top status bar */}
@@ -263,62 +279,138 @@ export default function EC2Control() {
         )}
 
         {/* Action Buttons */}
-        <div style={{ padding: "24px 24px 12px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
-          {/* START */}
-          <button onClick={() => handleAction("start")}
-            disabled={!canStart || actionLoading}
-            style={{
-              padding: "12px 8px", borderRadius: 10, fontSize: 13, fontWeight: 600,
-              cursor: canStart && !actionLoading ? "pointer" : "not-allowed",
-              border: "none", letterSpacing: "0.03em",
-              background: canStart ? "linear-gradient(135deg, #16a34a, #15803d)" : "#1a2e1a",
-              color: canStart ? "#fff" : "#2d4a2d",
-              transition: "all 0.2s", fontFamily: "'Space Grotesk', sans-serif",
-              boxShadow: canStart ? "0 4px 12px rgba(22,163,74,0.3)" : "none"
-            }}>
-            ▶ Start
-          </button>
+        <div style={{
+          padding: "20px 24px 18px",
+          borderTop: "1px solid #e5e7eb",
+          borderBottom: log.length ? "1px solid #e5e7eb" : "none",
+          background: "#f9fafb"
+        }}>
+          <div style={{
+            fontSize: 11,
+            color: "#6b7280",
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            marginBottom: 10
+          }}>
+            Controls
+          </div>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+            gap: 12
+          }}>
+            {/* START */}
+            <button
+              onClick={() => handleAction("start")}
+              disabled={!canStart || actionLoading}
+              style={{
+                padding: "12px 10px",
+                borderRadius: 999,
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: canStart && !actionLoading ? "pointer" : "not-allowed",
+                border: "none",
+                letterSpacing: "0.05em",
+                background: canStart ? "linear-gradient(135deg, #16a34a, #15803d)" : "#1a2e1a",
+                color: canStart ? "#ffffff" : "#4ade80",
+                transition: "transform 0.1s ease, box-shadow 0.1s ease, opacity 0.15s ease",
+                fontFamily: "'Space Grotesk', sans-serif",
+                boxShadow: canStart ? "0 6px 18px rgba(22,163,74,0.45)" : "none",
+                opacity: canStart ? 1 : 0.55
+              }}
+            >
+              ▶ Start
+            </button>
 
-          {/* STOP */}
-          <button onClick={() => handleAction("stop")}
-            disabled={!canStop || actionLoading}
-            style={{
-              padding: "12px 8px", borderRadius: 10, fontSize: 13, fontWeight: 600,
-              cursor: canStop && !actionLoading ? "pointer" : "not-allowed",
-              border: "none", letterSpacing: "0.03em",
-              background: canStop ? "linear-gradient(135deg, #dc2626, #b91c1c)" : "#2e1a1a",
-              color: canStop ? "#fff" : "#4a2d2d",
-              transition: "all 0.2s", fontFamily: "'Space Grotesk', sans-serif",
-              boxShadow: canStop ? "0 4px 12px rgba(220,38,38,0.3)" : "none"
-            }}>
-            ■ Stop
-          </button>
+            {/* STOP */}
+            <button
+              onClick={() => handleAction("stop")}
+              disabled={!canStop || actionLoading}
+              style={{
+                padding: "12px 10px",
+                borderRadius: 999,
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: canStop && !actionLoading ? "pointer" : "not-allowed",
+                border: "none",
+                letterSpacing: "0.05em",
+                background: canStop ? "linear-gradient(135deg, #dc2626, #b91c1c)" : "#2e1a1a",
+                color: canStop ? "#ffffff" : "#fca5a5",
+                transition: "transform 0.1s ease, box-shadow 0.1s ease, opacity 0.15s ease",
+                fontFamily: "'Space Grotesk', sans-serif",
+                boxShadow: canStop ? "0 6px 18px rgba(220,38,38,0.45)" : "none",
+                opacity: canStop ? 1 : 0.55
+              }}
+            >
+              ■ Stop
+            </button>
 
-          {/* REFRESH */}
-          <button onClick={fetchStatus} disabled={loading || actionLoading}
-            style={{
-              padding: "12px 8px", borderRadius: 10, fontSize: 13, fontWeight: 600,
-              cursor: loading || actionLoading ? "not-allowed" : "pointer",
-              border: "1px solid #2d3748", letterSpacing: "0.03em",
-              background: "transparent", color: loading ? "#374151" : "#9ca3af",
-              transition: "all 0.2s", fontFamily: "'Space Grotesk', sans-serif"
-            }}>
-            {loading ? (
-              <span style={{ display: "inline-block", animation: "spin 1s linear infinite" }}>↻</span>
-            ) : "↻ Status"}
-          </button>
+            {/* REFRESH */}
+            <button
+              onClick={fetchStatus}
+              disabled={loading || actionLoading}
+              style={{
+                padding: "12px 10px",
+                borderRadius: 999,
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: loading || actionLoading ? "not-allowed" : "pointer",
+                border: "1px solid #d1d5db",
+                letterSpacing: "0.05em",
+                background: "#ffffff",
+                color: loading ? "#9ca3af" : "#111827",
+                transition: "background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease",
+                fontFamily: "'Space Grotesk', sans-serif",
+                boxShadow: "0 3px 10px rgba(15,23,42,0.08)",
+                opacity: loading || actionLoading ? 0.7 : 1
+              }}
+            >
+              {loading ? (
+                <span style={{ display: "inline-block", animation: "spin 1s linear infinite" }}>↻ Checking...</span>
+              ) : "↻ Status"}
+            </button>
+          </div>
         </div>
 
         {/* Activity Log */}
         {log.length > 0 && (
-          <div style={{ borderTop: "1px solid #1f2937", padding: "12px 24px 20px" }}>
-            <div style={{ fontSize: 10, color: "#374151", letterSpacing: "0.1em",
-              textTransform: "uppercase", marginBottom: 8 }}>Activity Log</div>
-            <div style={{ maxHeight: 120, overflowY: "auto", display: "flex", flexDirection: "column", gap: 4 }}>
+          <div style={{
+            padding: "16px 24px 20px",
+            background: "#ffffff"
+          }}>
+            <div style={{
+              fontSize: 10,
+              color: "#6b7280",
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              marginBottom: 8
+            }}>
+              Activity Log
+            </div>
+            <div style={{
+              maxHeight: 140,
+              overflowY: "auto",
+              display: "flex",
+              flexDirection: "column",
+              gap: 4,
+              borderRadius: 10,
+              border: "1px dashed rgba(148,163,184,0.6)",
+              padding: "8px 10px",
+              background: "linear-gradient(to bottom, rgba(249,250,251,0.9), rgba(249,250,251,0.7))"
+            }}>
               {log.map((l, i) => (
                 <div key={i} style={{ display: "flex", gap: 10, fontSize: 11, alignItems: "baseline" }}>
-                  <span style={{ color: "#374151", flexShrink: 0 }}>{l.ts}</span>
-                  <span style={{ color: l.type === "error" ? "#f87171" : l.type === "success" ? "#4ade80" : l.type === "action" ? "#fbbf24" : "#6b7280" }}>
+                  <span style={{ color: "#6b7280", flexShrink: 0, minWidth: 78 }}>{l.ts}</span>
+                  <span style={{
+                    color:
+                      l.type === "error"
+                        ? "#b91c1c"
+                        : l.type === "success"
+                        ? "#15803d"
+                        : l.type === "action"
+                        ? "#92400e"
+                        : "#374151"
+                  }}>
                     {l.msg}
                   </span>
                 </div>
