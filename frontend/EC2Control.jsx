@@ -425,12 +425,9 @@ export default function EC2Control() {
               }}
             >
               {loading || actionLoading ? (
-                <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ display: "inline-block" }}>↻</span>
-                  <span>{loading ? "Checking..." : "Processing..."}</span>
-                </span>
+                <span>{loading ? "Checking..." : "Processing..."}</span>
               ) : (
-                "↻ Status"
+                "Status"
               )}
             </button>
           </div>
