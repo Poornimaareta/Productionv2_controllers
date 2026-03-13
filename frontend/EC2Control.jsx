@@ -270,7 +270,6 @@ export default function EC2Control() {
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap');
         @keyframes ping { 75%,100%{transform:scale(2);opacity:0} }
         @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes spin { to{transform:rotate(360deg)} }
         ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:transparent}
         ::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
       `}</style>
@@ -427,14 +426,7 @@ export default function EC2Control() {
             >
               {loading || actionLoading ? (
                 <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                  <span
-                    style={{
-                      display: "inline-block",
-                      animation: actionLoading ? "spin 1s linear infinite" : "none",
-                    }}
-                  >
-                    ↻
-                  </span>
+                  <span style={{ display: "inline-block" }}>↻</span>
                   <span>{loading ? "Checking..." : "Processing..."}</span>
                 </span>
               ) : (
