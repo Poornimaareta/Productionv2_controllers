@@ -106,6 +106,7 @@ function PasswordGate({ onUnlock }) {
             />
             <button
               type="button"
+              aria-label={showPw ? "Hide password" : "Show password"}
               onClick={() => setShowPw(s => !s)}
               style={{
                 position: "absolute",
@@ -116,15 +117,48 @@ function PasswordGate({ onUnlock }) {
                 border: "none",
                 color: "#6b7280",
                 cursor: "pointer",
-                fontSize: 11,
                 padding: 0,
                 lineHeight: 1,
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                fontFamily: "'IBM Plex Mono', monospace",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              {showPw ? "Hide" : "Show"}
+              {showPw ? (
+                // Eye with slash (hide)
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-5 0-9.27-3.11-11-7.5a11.8 11.8 0 0 1 3.06-4.36" />
+                  <path d="M6.1 6.1A9.94 9.94 0 0 1 12 4c5 0 9.27 3.11 11 7.5a11.82 11.82 0 0 1-2.33 3.41" />
+                  <path d="M14.12 14.12A3 3 0 0 1 9.88 9.88" />
+                  <path d="M1 1l22 22" />
+                </svg>
+              ) : (
+                // Normal eye (show)
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M1 12S4 5 12 5s11 7 11 7-3 7-11 7S1 12 1 12Z" />
+                  <circle cx="12" cy="12" r="3.5" />
+                </svg>
+              )}
             </button>
           </div>
 
