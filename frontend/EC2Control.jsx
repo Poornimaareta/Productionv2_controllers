@@ -116,12 +116,15 @@ function PasswordGate({ onUnlock }) {
                 border: "none",
                 color: "#6b7280",
                 cursor: "pointer",
-                fontSize: 16,
+                fontSize: 11,
                 padding: 0,
-                lineHeight: 1
+                lineHeight: 1,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                fontFamily: "'IBM Plex Mono', monospace",
               }}
             >
-              {showPw ? "🙈" : "👁"}
+              {showPw ? "Hide" : "Show"}
             </button>
           </div>
 
