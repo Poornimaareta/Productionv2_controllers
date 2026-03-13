@@ -141,7 +141,6 @@ export default function EC2Control() {
   const [actionLoading, setActionLoading] = useState(false);
   const [error, setError] = useState(null);
   const [log, setLog] = useState([]);
-  const [showConfig, setShowConfig] = useState(false);
 
   const addLog = (msg, type = "info") => {
     const ts = new Date().toLocaleTimeString();
@@ -202,9 +201,9 @@ export default function EC2Control() {
 
   return (
     <div style={{
-      minHeight: "100vh", background: "#0a0a0f",
+      minHeight: "100vh", background: "#f3f4f6",
       display: "flex", flexDirection: "column", alignItems: "center",
-      justifyContent: "center", padding: "24px 16px",
+      justifyContent: "center", padding: "32px 16px",
       fontFamily: "'IBM Plex Mono', monospace",
     }}>
       <style>{`
@@ -218,9 +217,9 @@ export default function EC2Control() {
 
       {/* Header */}
       <div style={{ marginBottom: 32, textAlign: "center" }}>
-        <div style={{ fontSize: 11, letterSpacing: "0.3em", color: "#4b5563",
+        <div style={{ fontSize: 11, letterSpacing: "0.3em", color: "#9ca3af",
           textTransform: "uppercase", marginBottom: 8 }}>AWS Infrastructure</div>
-        <h1 style={{ fontSize: 28, fontWeight: 700, color: "#f9fafb", margin: 0,
+        <h1 style={{ fontSize: 28, fontWeight: 700, color: "#111827", margin: 0,
           fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.02em" }}>
           EC2 Instance Control
         </h1>
@@ -229,85 +228,42 @@ export default function EC2Control() {
       {/* Main Card */}
       <div style={{
         width: "100%", maxWidth: 480,
-        background: "#111116", border: "1px solid #1f2937",
+        background: "#ffffff", border: "1px solid #e5e7eb",
         borderRadius: 16, overflow: "hidden",
-        boxShadow: "0 0 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03)",
+        boxShadow: "0 18px 45px rgba(15,23,42,0.10)",
         animation: "fadeIn 0.4s ease"
       }}>
         {/* Top status bar */}
         <div style={{
-          background: "linear-gradient(135deg, #0f172a 0%, #111827 100%)",
-          borderBottom: "1px solid #1f2937", padding: "20px 24px",
+          background: "#f9fafb",
+          borderBottom: "1px solid #e5e7eb", padding: "20px 24px",
           display: "flex", alignItems: "center", gap: 12, justifyContent: "space-between"
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <StatusDot state={state} />
             <div>
-              <div style={{ fontSize: 18, fontWeight: 600, color: cfg.text,
+              <div style={{ fontSize: 18, fontWeight: 600, color: "#111827",
                 fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.01em" }}>
-                {cfg.label}
+                WebBackendServer
               </div>
-              <div style={{ fontSize: 11, color: "#4b5563", marginTop: 2 }}>
-                {info?.name || instanceId}
+              <div style={{ fontSize: 11, color: "#6b7280", marginTop: 2 }}>
+                Current state: {cfg.label}
               </div>
             </div>
           </div>
-          <button onClick={() => setShowConfig(s => !s)} style={{
-            background: "rgba(255,255,255,0.04)", border: "1px solid #2d3748",
-            color: "#6b7280", borderRadius: 8, padding: "6px 12px",
-            cursor: "pointer", fontSize: 11, letterSpacing: "0.05em"
-          }}>⚙ Config</button>
-        </div>
-
-        {/* Config Panel */}
-        {showConfig && (
-          <div style={{ background: "#0d0d12", borderBottom: "1px solid #1f2937",
-            padding: "16px 24px", animation: "fadeIn 0.2s ease" }}>
-            <div style={{ marginBottom: 12 }}>
-              <label style={{ fontSize: 10, color: "#4b5563", letterSpacing: "0.1em",
-                textTransform: "uppercase", display: "block", marginBottom: 6 }}>Instance ID</label>
-              <input value={instanceId} onChange={e => setInstanceId(e.target.value)}
-                style={{ width: "100%", background: "#1a1a24", border: "1px solid #2d3748",
-                  color: "#e5e7eb", borderRadius: 8, padding: "8px 12px", fontSize: 12,
-                  fontFamily: "'IBM Plex Mono', monospace", outline: "none", boxSizing: "border-box" }} />
-            </div>
-            <div>
-              <label style={{ fontSize: 10, color: "#4b5563", letterSpacing: "0.1em",
-                textTransform: "uppercase", display: "block", marginBottom: 6 }}>API Endpoint</label>
-              <input value={apiEndpoint} onChange={e => setApiEndpoint(e.target.value)}
-                style={{ width: "100%", background: "#1a1a24", border: "1px solid #2d3748",
-                  color: "#e5e7eb", borderRadius: 8, padding: "8px 12px", fontSize: 12,
-                  fontFamily: "'IBM Plex Mono', monospace", outline: "none", boxSizing: "border-box" }} />
-            </div>
-          </div>
-        )}
-
-        {/* Instance metadata */}
-        <div style={{ padding: "8px 24px 0" }}>
-          {info && (<>
-            <MetaRow label="Instance ID" value={info.instance_id} />
-            <MetaRow label="Type" value={info.instance_type} />
-            <MetaRow label="Public IP" value={info.public_ip} />
-            <MetaRow label="Last Seen" value={new Date().toLocaleTimeString()} />
-          </>)}
-          {!info && !loading && (
-            <div style={{ padding: "20px 0", textAlign: "center", color: "#374151", fontSize: 13 }}>
-              Click <span style={{ color: "#6366f1" }}>Refresh Status</span> to load instance info
-            </div>
-          )}
         </div>
 
         {/* Error */}
         {error && (
-          <div style={{ margin: "12px 24px 0", background: "rgba(239,68,68,0.1)",
-            border: "1px solid rgba(239,68,68,0.3)", borderRadius: 8, padding: "10px 14px",
-            color: "#f87171", fontSize: 12 }}>
+          <div style={{ margin: "16px 24px 0", background: "rgba(248,113,113,0.08)",
+            border: "1px solid rgba(248,113,113,0.5)", borderRadius: 8, padding: "10px 14px",
+            color: "#b91c1c", fontSize: 12 }}>
             ⚠ {error}
           </div>
         )}
 
         {/* Action Buttons */}
-        <div style={{ padding: "20px 24px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+        <div style={{ padding: "24px 24px 12px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
           {/* START */}
           <button onClick={() => handleAction("start")}
             disabled={!canStart || actionLoading}
