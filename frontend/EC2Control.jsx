@@ -621,7 +621,7 @@ export default function EC2Control() {
               {loading || actionLoading ? (
                 <span>{loading ? "Checking..." : "Processing..."}</span>
               ) : (
-                "Status"
+                "Refresh"
               )}
             </button>
           </div>
