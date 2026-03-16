@@ -28,12 +28,11 @@ const SERVERS = [
     apiEndpoint: Development_API_ENDPOINT,
   },
   {
-    id: "Production-server",
-    label: "Production-server",
+    id: "production_server",
+    label: "production_server",
     instanceId: Productionv2_INSTANCE_ID,
     apiEndpoint: Productionv2_API_ENDPOINT,
   },
-  
 ];
 const APP_PASSWORD = "prodv2@2024"; // ← change this
 // ─────────────────────────────────────────────────────────────────────────────
