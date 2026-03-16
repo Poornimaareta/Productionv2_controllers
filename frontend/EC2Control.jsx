@@ -2,7 +2,34 @@ import { useState, useEffect, useCallback } from "react";
 
 // ─── CONFIG: Set your values here ───────────────────────────────────────────
 const DEFAULT_INSTANCE_ID = "i-02413380b122ed0a7";
-const DEFAULT_API_ENDPOINT = "https://4oi4pmg6qdnpbz35cvev5xvk240vanzy.lambda-url.us-east-2.on.aws/";
+// Placeholder for a second instance. Replace this with your new instance ID.
+const SECOND_INSTANCE_ID = "i-03dfb40b5dfab9897"; // TODO: update manually
+// New default API endpoint
+const DEFAULT_API_ENDPOINT = "https://pv3ibyl74eh5vnnjwvucoapvve0hohuh.lambda-url.us-east-2.on.aws/";
+// Previous endpoint kept as secondary option
+const SECONDARY_API_ENDPOINT = "https://4oi4pmg6qdnpbz35cvev5xvk240vanzy.lambda-url.us-east-2.on.aws/";
+
+// You can adjust / extend this list to add more connections
+const SERVERS = [
+  {
+    id: "web-backend-v2",
+    label: "WebBackendServer v2",
+    instanceId: DEFAULT_INSTANCE_ID,
+    apiEndpoint: DEFAULT_API_ENDPOINT,
+  },
+  {
+    id: "web-backend-v1",
+    label: "WebBackendServer v1",
+    instanceId: DEFAULT_INSTANCE_ID,
+    apiEndpoint: SECONDARY_API_ENDPOINT,
+  },
+  {
+    id: "web-backend-new",
+    label: "New Instance (edit ID)",
+    instanceId: SECOND_INSTANCE_ID,
+    apiEndpoint: DEFAULT_API_ENDPOINT,
+  },
+];
 const APP_PASSWORD = "prodv2@2024"; // ← change this
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -231,8 +258,9 @@ function MetaRow({ label, value }) {
 
 export default function EC2Control() {
   const [unlocked, setUnlocked] = useState(false);
-  const [instanceId, setInstanceId] = useState(DEFAULT_INSTANCE_ID);
-  const [apiEndpoint, setApiEndpoint] = useState(DEFAULT_API_ENDPOINT);
+  const [selectedServerId, setSelectedServerId] = useState(SERVERS[0].id);
+  const [instanceId, setInstanceId] = useState(SERVERS[0].instanceId);
+  const [apiEndpoint, setApiEndpoint] = useState(SERVERS[0].apiEndpoint);
   const [info, setInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
@@ -294,21 +322,70 @@ export default function EC2Control() {
   const canStart = state === "stopped";
   const canStop = state === "running";
 
+  const currentServer =
+    SERVERS.find((s) => s.id === selectedServerId) || SERVERS[0];
+
+  const handleServerChange = (e) => {
+    const nextId = e.target.value;
+    const next = SERVERS.find((s) => s.id === nextId);
+    if (!next) return;
+    setSelectedServerId(next.id);
+    setInstanceId(next.instanceId);
+    setApiEndpoint(next.apiEndpoint);
+    setInfo(null);
+    setError(null);
+    setLog([]);
+    addLog(`Switched to ${next.label}`, "info");
+  };
+
   if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
 
   return (
-    <div style={{
-      minHeight: "100vh", background: "#f3f4f6",
-      display: "flex", flexDirection: "column", alignItems: "center",
-      justifyContent: "center", padding: "32px 16px",
-      fontFamily: "'IBM Plex Mono', monospace",
-    }}>
+    <div
+      className="ec2-root"
+      style={{
+        minHeight: "100vh",
+        background: "#f3f4f6",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "32px 16px",
+        fontFamily: "'IBM Plex Mono', monospace",
+      }}
+    >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap');
         @keyframes ping { 75%,100%{transform:scale(2);opacity:0} }
         @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
         ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:transparent}
         ::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
+
+        /* Responsive layout tweaks */
+        .ec2-root {
+          padding: 32px 16px;
+        }
+
+        .ec2-controls-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        @media (max-width: 640px) {
+          .ec2-root {
+            padding: 20px 12px;
+          }
+
+          .ec2-controls-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        @media (min-width: 641px) and (max-width: 900px) {
+          .ec2-controls-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
       `}</style>
 
       {/* Header */}
@@ -346,22 +423,76 @@ export default function EC2Control() {
         animation: "fadeIn 0.4s ease"
       }}>
         {/* Top status bar */}
-        <div style={{
-          background: "#f9fafb",
-          borderBottom: "1px solid #e5e7eb", padding: "20px 24px",
-          display: "flex", alignItems: "center", gap: 12, justifyContent: "space-between"
-        }}>
+        <div
+          style={{
+            background: "#f9fafb",
+            borderBottom: "1px solid #e5e7eb",
+            padding: "16px 18px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 12,
+            flexWrap: "wrap",
+          }}
+        >
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <StatusDot state={state} />
             <div>
-              <div style={{ fontSize: 18, fontWeight: 600, color: "#111827",
-                fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.01em" }}>
-                WebBackendServer
+              <div
+                style={{
+                  fontSize: 18,
+                  fontWeight: 600,
+                  color: "#111827",
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                {currentServer.label}
               </div>
               <div style={{ fontSize: 11, color: "#6b7280", marginTop: 2 }}>
                 Current state: {cfg.label}
               </div>
             </div>
+          </div>
+
+          {/* Server selector */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              fontSize: 12,
+            }}
+          >
+            <span
+              style={{
+                textTransform: "uppercase",
+                letterSpacing: "0.12em",
+                color: "#6b7280",
+                fontFamily: "'IBM Plex Mono', monospace",
+              }}
+            >
+              Target
+            </span>
+            <select
+              value={selectedServerId}
+              onChange={handleServerChange}
+              style={{
+                fontSize: 12,
+                padding: "6px 10px",
+                borderRadius: 999,
+                border: "1px solid #d1d5db",
+                background: "#ffffff",
+                fontFamily: "'IBM Plex Mono', monospace",
+                cursor: "pointer",
+              }}
+            >
+              {SERVERS.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.label}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -390,11 +521,12 @@ export default function EC2Control() {
           }}>
             Controls
           </div>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-            gap: 12
-          }}>
+          <div
+            className="ec2-controls-grid"
+            style={{
+              gap: 12,
+            }}
+          >
             {/* START */}
             <button
               onClick={() => handleAction("start")}
