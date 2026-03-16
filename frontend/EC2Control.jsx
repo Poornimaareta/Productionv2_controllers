@@ -3,11 +3,15 @@ import { useState, useEffect, useCallback } from "react";
 // ─── CONFIG: Set your values here ───────────────────────────────────────────
 const WebBackend_INSTANCE_ID = "i-02413380b122ed0a7";
 // Placeholder for a second instance. Replace this with your new instance ID.
-const Development_INSTANCE_ID = "i-03dfb40b5dfab9897"; // TODO: update manually
+const Development_INSTANCE_ID = "i-03dfb40b5dfab9897"; 
+
+const Production_INSTANCE_ID = "i-04029e0d7b5c9802b"; // TODO: update manually
 // New default API endpoint
 const Development_API_ENDPOINT = "https://pv3ibyl74eh5vnnjwvucoapvve0hohuh.lambda-url.us-east-2.on.aws/";
 // Previous endpoint kept as secondary option
 const WebBackend_API_ENDPOINT = "https://4oi4pmg6qdnpbz35cvev5xvk240vanzy.lambda-url.us-east-2.on.aws/";
+
+const Production_API_ENDPOINT = "https://7rtolhiu35vnthqgqhsvkgfvgm0pveha.lambda-url.us-east-2.on.aws/";
 
 // You can adjust / extend this list to add more connections
 const SERVERS = [
@@ -22,6 +26,12 @@ const SERVERS = [
     label: "Development-server",
     instanceId: Development_INSTANCE_ID,
     apiEndpoint: Development_API_ENDPOINT,
+  },
+  {
+    id: "Production-server",
+    label: "Production-server",
+    instanceId: Production_INSTANCE_ID,
+    apiEndpoint: Production_API_ENDPOINT,
   },
   
 ];
