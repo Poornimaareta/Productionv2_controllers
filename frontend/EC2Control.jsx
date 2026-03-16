@@ -1,27 +1,27 @@
 import { useState, useEffect, useCallback } from "react";
 
 // ─── CONFIG: Set your values here ───────────────────────────────────────────
-const DEFAULT_INSTANCE_ID = "i-02413380b122ed0a7";
+const WebBackend_INSTANCE_ID = "i-02413380b122ed0a7";
 // Placeholder for a second instance. Replace this with your new instance ID.
-const SECOND_INSTANCE_ID = "i-03dfb40b5dfab9897"; // TODO: update manually
+const Development_INSTANCE_ID = "i-03dfb40b5dfab9897"; // TODO: update manually
 // New default API endpoint
-const DEFAULT_API_ENDPOINT = "https://pv3ibyl74eh5vnnjwvucoapvve0hohuh.lambda-url.us-east-2.on.aws/";
+const Development_API_ENDPOINT = "https://pv3ibyl74eh5vnnjwvucoapvve0hohuh.lambda-url.us-east-2.on.aws/";
 // Previous endpoint kept as secondary option
-const SECONDARY_API_ENDPOINT = "https://4oi4pmg6qdnpbz35cvev5xvk240vanzy.lambda-url.us-east-2.on.aws/";
+const WebBackend_API_ENDPOINT = "https://4oi4pmg6qdnpbz35cvev5xvk240vanzy.lambda-url.us-east-2.on.aws/";
 
 // You can adjust / extend this list to add more connections
 const SERVERS = [
   {
     id: "web-backend",
     label: "WebBackendserver",
-    instanceId: DEFAULT_INSTANCE_ID,
-    apiEndpoint: DEFAULT_API_ENDPOINT,
+    instanceId: WebBackend_INSTANCE_ID,
+    apiEndpoint: Development_API_ENDPOINT,
   },
   {
     id: "Development-server",
     label: "Development-server",
-    instanceId: SECOND_INSTANCE_ID,
-    apiEndpoint: SECONDARY_API_ENDPOINT,
+    instanceId: Development_INSTANCE_ID,
+    apiEndpoint: WebBackend_API_ENDPOINT,
   },
   
 ];
