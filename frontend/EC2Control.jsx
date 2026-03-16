@@ -12,23 +12,18 @@ const SECONDARY_API_ENDPOINT = "https://4oi4pmg6qdnpbz35cvev5xvk240vanzy.lambda-
 // You can adjust / extend this list to add more connections
 const SERVERS = [
   {
-    id: "web-backend-v2",
-    label: "WebBackendServer v2",
+    id: "web-backend",
+    label: "WebBackendserver",
     instanceId: DEFAULT_INSTANCE_ID,
     apiEndpoint: DEFAULT_API_ENDPOINT,
   },
   {
-    id: "web-backend-v1",
-    label: "WebBackendServer v1",
-    instanceId: DEFAULT_INSTANCE_ID,
+    id: "Development-server",
+    label: "Development-server",
+    instanceId: SECOND_INSTANCE_ID,
     apiEndpoint: SECONDARY_API_ENDPOINT,
   },
-  {
-    id: "web-backend-new",
-    label: "New Instance (edit ID)",
-    instanceId: SECOND_INSTANCE_ID,
-    apiEndpoint: DEFAULT_API_ENDPOINT,
-  },
+  
 ];
 const APP_PASSWORD = "prodv2@2024"; // ← change this
 // ─────────────────────────────────────────────────────────────────────────────
