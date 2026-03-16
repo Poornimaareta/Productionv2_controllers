@@ -15,13 +15,13 @@ const SERVERS = [
     id: "web-backend",
     label: "WebBackendserver",
     instanceId: WebBackend_INSTANCE_ID,
-    apiEndpoint: Development_API_ENDPOINT,
+    apiEndpoint: WebBackend_API_ENDPOINT,
   },
   {
     id: "Development-server",
     label: "Development-server",
     instanceId: Development_INSTANCE_ID,
-    apiEndpoint: WebBackend_API_ENDPOINT,
+    apiEndpoint: Development_API_ENDPOINT,
   },
   
 ];
