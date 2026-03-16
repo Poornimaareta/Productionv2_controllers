@@ -1,25 +1,24 @@
 import { useState, useEffect, useCallback } from "react";
 
 // ─── CONFIG: Set your values here ───────────────────────────────────────────
-const WebBackend_INSTANCE_ID = "i-02413380b122ed0a7";
+const Productionv2_INSTANCE_ID = "i-04029e0d7b5c9802b";
 // Placeholder for a second instance. Replace this with your new instance ID.
 const Development_INSTANCE_ID = "i-03dfb40b5dfab9897"; 
 
-const Productionv2_INSTANCE_ID = "i-04029e0d7b5c9802b"; // TODO: update manually
-// New default API endpoint
+
 const Development_API_ENDPOINT = "https://pv3ibyl74eh5vnnjwvucoapvve0hohuh.lambda-url.us-east-2.on.aws/";
 // Previous endpoint kept as secondary option
-const WebBackend_API_ENDPOINT = "https://4oi4pmg6qdnpbz35cvev5xvk240vanzy.lambda-url.us-east-2.on.aws/";
-
 const Productionv2_API_ENDPOINT = "https://7rtolhiu35vnthqgqhsvkgfvgm0pveha.lambda-url.us-east-2.on.aws/";
+
+
 
 // You can adjust / extend this list to add more connections
 const SERVERS = [
   {
-    id: "web-backend",
-    label: "WebBackendserver",
-    instanceId: WebBackend_INSTANCE_ID,
-    apiEndpoint: WebBackend_API_ENDPOINT,
+    id: "production_server",
+    label: "production_server",
+    instanceId: Productionv2_INSTANCE_ID,
+    apiEndpoint: Productionv2_API_ENDPOINT,
   },
   {
     id: "Development-server",
@@ -27,12 +26,7 @@ const SERVERS = [
     instanceId: Development_INSTANCE_ID,
     apiEndpoint: Development_API_ENDPOINT,
   },
-  {
-    id: "production_server",
-    label: "production_server",
-    instanceId: Productionv2_INSTANCE_ID,
-    apiEndpoint: Productionv2_API_ENDPOINT,
-  },
+  
 ];
 const APP_PASSWORD = "prodv2@2024"; // ← change this
 // ─────────────────────────────────────────────────────────────────────────────
