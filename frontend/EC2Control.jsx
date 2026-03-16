@@ -28,8 +28,8 @@ const SERVERS = [
     apiEndpoint: Development_API_ENDPOINT,
   },
   {
-    id: "Production-server",
-    label: "Production-server",
+    id: "production_server",
+    label: "production_server",
     instanceId: Production_INSTANCE_ID,
     apiEndpoint: Production_API_ENDPOINT,
   },
