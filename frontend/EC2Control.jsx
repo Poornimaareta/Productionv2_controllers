@@ -4,11 +4,13 @@ import { useState, useEffect, useCallback } from "react";
 const Productionv2_INSTANCE_ID = "i-04029e0d7b5c9802b";
 // Placeholder for a second instance. Replace this with your new instance ID.
 const Development_INSTANCE_ID = "i-03dfb40b5dfab9897"; 
+const WebBackend_INSTANCE_ID = "i-02413380b122ed0a7";
 
 
 const Development_API_ENDPOINT = "https://pv3ibyl74eh5vnnjwvucoapvve0hohuh.lambda-url.us-east-2.on.aws/";
 // Previous endpoint kept as secondary option
 const Productionv2_API_ENDPOINT = "https://7rtolhiu35vnthqgqhsvkgfvgm0pveha.lambda-url.us-east-2.on.aws/";
+const WebBackend_API_ENDPOINT = "https://4oi4pmg6qdnpbz35cvev5xvk240vanzy.lambda-url.us-east-2.on.aws/";
 
 
 
@@ -25,6 +27,12 @@ const SERVERS = [
     label: "Development-server",
     instanceId: Development_INSTANCE_ID,
     apiEndpoint: Development_API_ENDPOINT,
+  },
+  {
+    id: "WebBackend-server",
+    label: "WebBackend-server",
+    instanceId: WebBackend_INSTANCE_ID,
+    apiEndpoint: WebBackend_API_ENDPOINT,
   },
   
 ];
@@ -48,7 +56,7 @@ function PasswordGate({ onUnlock }) {
 
   return (
     <div style={{
-      minHeight: "100vh",
+      height: "100vh",
       background: "#f3f4f6",
       display: "flex",
       flexDirection: "column",
@@ -56,12 +64,20 @@ function PasswordGate({ onUnlock }) {
       justifyContent: "center",
       padding: "32px 16px",
       fontFamily: "'IBM Plex Mono', monospace",
+      boxSizing: "border-box",
+      overflow: "hidden",
     }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap');
         @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
         @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)} }
         input:focus { outline: none; border-color: #6366f1 !important; box-shadow: 0 0 0 1px rgba(129,140,248,0.5); }
+
+        @media (max-height: 700px) {
+          body {
+            margin: 0;
+          }
+        }
       `}</style>
 
       <div style={{ marginBottom: 32, textAlign: "center" }}>
@@ -342,7 +358,7 @@ export default function EC2Control() {
     <div
       className="ec2-root"
       style={{
-        minHeight: "100vh",
+        height: "100vh",
         background: "#f3f4f6",
         display: "flex",
         flexDirection: "column",
@@ -350,6 +366,8 @@ export default function EC2Control() {
         justifyContent: "center",
         padding: "32px 16px",
         fontFamily: "'IBM Plex Mono', monospace",
+        boxSizing: "border-box",
+        overflow: "hidden",
       }}
     >
       <style>{`
@@ -359,9 +377,18 @@ export default function EC2Control() {
         ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:transparent}
         ::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
 
-        /* Responsive layout tweaks */
+        /* Global + responsive layout tweaks */
+        html, body, #root {
+          height: 100%;
+          margin: 0;
+        }
+
         .ec2-root {
           padding: 32px 16px;
+        }
+
+        .ec2-card {
+          max-height: calc(100vh - 140px);
         }
 
         .ec2-controls-grid {
@@ -410,7 +437,7 @@ export default function EC2Control() {
       </div>
 
       {/* Main Card */}
-      <div style={{
+      <div className="ec2-card" style={{
         width: "100%",
         maxWidth: 520,
         background: "#ffffff",
@@ -648,7 +675,7 @@ export default function EC2Control() {
         )}
       </div>
 
-      <div style={{ marginTop: 16, fontSize: 11, color: "#1f2937", textAlign: "center", lineHeight: 1.8 }}>
+      <div style={{ marginTop: 12, fontSize: 11, color: "#1f2937", textAlign: "center", lineHeight: 1.6 }}>
         Powered by AWS Lambda Function URL
       </div>
     </div>
